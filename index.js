@@ -24,10 +24,6 @@ app.post("/login", (req, res) => {
         email: "admin@admin.com",
     };
     if (req.body.email != undefined && req.body.password != undefined) {
-        // res.send(JSON.stringify({ 'data': username, 'pass': password }));
-        var email = req.body.email;
-        var password = req.body.password;
-        // console.log(JSON.stringify({ data: email, pass: password }));
         database.query(
             "SELECT * FROM user WHERE email = ?", [req.body.email],
             (err, result) => {
@@ -54,11 +50,6 @@ app.post("/login", (req, res) => {
     } else {
         res.status(401).send(JSON.stringify({ data: "" }));
     }
-    // if (req.body.email == data.email && req.body.password == "admin") {
-    //     // jwt.sign({ data }, process.env.JWT_SECRET, { expiresIn: "1h" }, (err, token) => {
-    //     //     res.send(JSON.stringify({ token }));
-    //     // });
-    // }
 });
 
 app.use((req, res, next) => {
@@ -67,7 +58,6 @@ app.use((req, res, next) => {
     if (bearer === "unidentified" || bearer === undefined) {
         res.status(401).send(JSON.stringify({ message: "Login dulu" }));
     } else {
-        // res.status(401).send(JSON.stringify({ message: bearer }));
         next();
     }
 });
